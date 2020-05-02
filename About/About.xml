@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>Backup Power</name>
+	<author>Fluffy</author>
+	<supportedVersions>
+		<li>1.1</li>
+	</supportedVersions>
+	<description>give priorities to power producers, that generator doesn't have to run all the time</description>
+	<url>https://steamcommunity.com/id/Fluffy/myworkshopfiles/?appid=294100</url>
+</ModMetaData>
