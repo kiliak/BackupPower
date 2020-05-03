@@ -1,3 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
+    <!-- placeworker error messages -->
+    <Fluffy.BackupPower.PlaceWorker.PlaceOnPowerPlant>must be placed on a power generator</Fluffy.BackupPower.PlaceWorker.PlaceOnPowerPlant>
+    <Fluffy.BackupPower.PlaceWorker.PlaceOnFlickable>must be placed on a generator that can be turned on and off</Fluffy.BackupPower.PlaceWorker.PlaceOnFlickable>
+    <Fluffy.BackupPower.PlaceWorker.OnlyOneAttachmentAllowed>only one backup power controller is allowed per generator</Fluffy.BackupPower.PlaceWorker.OnlyOneAttachmentAllowed>
+
+    <!-- settings -->
+    <Fluffy.BackupPower.Settings.UpdateInterval>Update interval (current: {0}, default: {1})</Fluffy.BackupPower.Settings.UpdateInterval>
+    <Fluffy.BackupPower.Settings.UpdateInterval.Tooltip>The interval with which backup power needs are re-calculated. Shorter intervals means less wastage of resources, but may cause some lag.</Fluffy.BackupPower.Settings.UpdateInterval.Tooltip>
+
+    <!-- destroyed because parent destroyed message -->
+    <Fluffy.BackupPower.AttachmentDestroyedBecauseParentGone>Backup power control box destroyed because the {0} it was attached to was destroyed.</Fluffy.BackupPower.AttachmentDestroyedBecauseParentGone>
+    <!-- default if we don't have a more specific label above -->
+    <Fluffy.BackupPower.Generator>generator</Fluffy.BackupPower.Generator>
 </LanguageData>

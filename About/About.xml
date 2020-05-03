@@ -1,10 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ModMetaData>
-	<name>Backup Power</name>
-	<author>Fluffy</author>
-	<supportedVersions>
-		<li>1.1</li>
-	</supportedVersions>
-	<description>give priorities to power producers, that generator doesn't have to run all the time</description>
-	<url>https://steamcommunity.com/id/Fluffy/myworkshopfiles/?appid=294100</url>
+  <name>Backup Power</name>
+  <author>Fluffy</author>
+  <supportedVersions>
+    <li>1.1</li>
+  </supportedVersions>
+  <description>give priorities to power producers, that generator doesn’t have to run all the time
+
+&lt;size=24&gt;Important&lt;/size&gt;
+&lt;size=24&gt;Features&lt;/size&gt;
+&lt;size=24&gt;Known Issues&lt;/size&gt;
+&lt;size=24&gt;Version&lt;/size&gt;
+This is version 0.0.34, for RimWorld 1.1.2618.
+
+</description>
+  <url>https://steamcommunity.com/id/Fluffy/myworkshopfiles/?appid=294100</url>
+  <packageId>fluffy.backuppower</packageId>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+      <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+  </loadAfter>
 </ModMetaData>

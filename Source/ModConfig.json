@@ -1,12 +1,20 @@
 {
-  "name": "Backup Power",
-  "version": {
-    "major": 0,
-    "minor": 0,
-    "build": 0
-  },
-  "git_user": "fluffy-mods",
-  "git_repo": "BackupPower",
-  "visibility": 0,
-  "packageId": "fluffy.backup power"
+    "name": "Backup Power",
+    "version": {
+        "major": 0,
+        "minor": 0,
+        "build": 34
+    },
+    "git_user": "fluffy-mods",
+    "git_repo": "BackupPower",
+    "visibility": 0,
+    "packageId": "fluffy.backuppower",
+    "changenote": "",
+    "changenotes": [],
+    "contributors": {
+        "Cenbes": "Control box texture"
+    },
+    "tags": [
+        "1.1"
+    ]
 }

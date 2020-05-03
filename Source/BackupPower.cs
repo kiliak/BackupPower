@@ -1,20 +1,16 @@
-﻿using System.Reflection;
-using System.Linq;
-using Verse;
-using RimWorld;
+﻿using Verse;
 using UnityEngine;
 using HarmonyLib;
 
 namespace BackupPower
 {
-	public class Mod : Verse.Mod
+	public class BackupPower : Mod
 	{
 		public static Settings Settings { get; private set; }
-		public Mod(ModContentPack content) : base(content)
+		public BackupPower(ModContentPack content) : base(content)
 		{
 			// initialize settings
 			Settings = GetSettings<Settings>();
-
 
 #if DEBUG
 			Harmony.DEBUG = true;
@@ -34,6 +30,5 @@ namespace BackupPower
 		{
 			return "Backup Power";
 		}
-
 	}
 }
