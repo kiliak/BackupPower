@@ -1,9 +1,9 @@
 {
     "name": "Backup Power",
     "version": {
-        "major": 0,
+        "major": 1,
         "minor": 0,
-        "build": 34
+        "build": 39
     },
     "git_user": "fluffy-mods",
     "git_repo": "BackupPower",
