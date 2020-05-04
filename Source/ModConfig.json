@@ -2,15 +2,22 @@
     "name": "Backup Power",
     "version": {
         "major": 1,
-        "minor": 1,
-        "build": 50
+        "minor": 2,
+        "build": 51
     },
     "git_user": "fluffy-mods",
     "git_repo": "BackupPower",
     "visibility": 0,
     "packageId": "fluffy.backuppower",
-    "changenote": "",
+    "changenote": "2020-05-04 14:05 :: Fluffy :: remove last traces of Harmony requirement",
     "changenotes": [
+        {
+            "repo": "BackupPower",
+            "hash": "84b86e3f5d4889b627f1be2252dad7daf6373870",
+            "date": "2020-05-04 14:05",
+            "author": "Fluffy",
+            "message": "remove last traces of Harmony requirement"
+        },
         {
             "repo": "BackupPower",
             "hash": "48719cd45a72897ea7d44eba89b2d6546cea32dc",
