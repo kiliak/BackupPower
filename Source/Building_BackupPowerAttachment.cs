@@ -77,7 +77,13 @@ namespace BackupPower
 
         public void TurnOn()
         {
+            _lastOnTick = Find.TickManager.TicksGame;
             Flickable.Force( true );
+        }
+
+        public bool CanTurnOff()
+        {
+            return _lastOnTick + BackupPower.Settings.MinimumOnTime < Find.TickManager.TicksGame;
         }
 
         public void TurnOff()
@@ -86,6 +92,7 @@ namespace BackupPower
         }
 
         private Building _parent;
+        private int _lastOnTick;
 
         public Building Parent
         {

@@ -70,7 +70,8 @@ namespace BackupPower
                 var overProduction = production - need;
                 var backups = users.Where( u => u.currentProduction > 0
                                              && u.currentProduction < overProduction
-                                             && u.broker            != null )
+                                             && u.broker            != null
+                                             && u.broker.CanTurnOff() )
                                    .ToList();
 
                 while ( backups.Any() )

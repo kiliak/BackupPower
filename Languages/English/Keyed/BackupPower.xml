@@ -8,6 +8,8 @@
     <!-- settings -->
     <Fluffy.BackupPower.Settings.UpdateInterval>Update interval (current: {0}, default: {1})</Fluffy.BackupPower.Settings.UpdateInterval>
     <Fluffy.BackupPower.Settings.UpdateInterval.Tooltip>The interval with which backup power needs are re-calculated. Shorter intervals means less wastage of resources, but may cause some lag.</Fluffy.BackupPower.Settings.UpdateInterval.Tooltip>
+    <Fluffy.BackupPower.Settings.MinimumOnTime>Minimum ON time (current: {0}, default: {1})</Fluffy.BackupPower.Settings.MinimumOnTime>
+    <Fluffy.BackupPower.Settings.MinimumOnTime.Tooltip>The minimum time generators will stay active when activated. Shorter times are more efficient, but may lead to generators 'flickering' on and off.</Fluffy.BackupPower.Settings.MinimumOnTime.Tooltip>
 
     <!-- destroyed because parent destroyed message -->
     <Fluffy.BackupPower.AttachmentDestroyedBecauseParentGone>Backup power control box destroyed because the {0} it was attached to was destroyed.</Fluffy.BackupPower.AttachmentDestroyedBecauseParentGone>
