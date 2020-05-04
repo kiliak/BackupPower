@@ -4,9 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -106,7 +103,7 @@ namespace BackupPower
                     backup.broker.TurnOn();
 
                     // remove invalid backups from the list
-                    underProduction -= backup.currentProduction;
+                    underProduction -= backup.potentialProduction;
                     backups.Remove( backup );
                 }
             }

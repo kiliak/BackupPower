@@ -1,6 +1,5 @@
 ﻿using Verse;
 using UnityEngine;
-using HarmonyLib;
 
 namespace BackupPower
 {
@@ -11,13 +10,6 @@ namespace BackupPower
 		{
 			// initialize settings
 			Settings = GetSettings<Settings>();
-
-#if DEBUG
-			Harmony.DEBUG = true;
-#endif
-			Harmony harmony = new Harmony("Fluffy.BackupPower");
-			harmony.PatchAll();
-
 		}
 
 		public override void DoSettingsWindowContents(Rect inRect)

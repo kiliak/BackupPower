@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using HarmonyLib;
 using RimWorld;
 using Verse;
 
@@ -31,7 +30,7 @@ namespace BackupPower
             set.Remove( item );
         }
 
-        private static ConditionalWeakTable<ThingWithComps, CompRefuelable> _refuelables =
+        private static readonly ConditionalWeakTable<ThingWithComps, CompRefuelable> _refuelables =
             new ConditionalWeakTable<ThingWithComps, CompRefuelable>();
 
         public static CompRefuelable RefuelableComp( this ThingWithComps parent )
@@ -43,7 +42,7 @@ namespace BackupPower
             return refuelable;
         }
 
-        private static ConditionalWeakTable<ThingWithComps, CompFlickable> _flickables =
+        private static readonly ConditionalWeakTable<ThingWithComps, CompFlickable> _flickables =
             new ConditionalWeakTable<ThingWithComps, CompFlickable>();
 
         public static CompFlickable FlickableComp( this ThingWithComps parent )
@@ -55,8 +54,7 @@ namespace BackupPower
             return flickable;
         }
 
-        private static FieldInfo _flickable_wantSwitchOn_FI =
-            AccessTools.Field( typeof( CompFlickable ), "wantSwitchOn" );
+        private static readonly FieldInfo _flickable_wantSwitchOn_FI = typeof( CompFlickable ).GetField( "wantSwitchOn", BindingFlags.Instance | BindingFlags.NonPublic );
 
         public static void Force( this CompFlickable flickable, bool mode )
         {
@@ -66,7 +64,7 @@ namespace BackupPower
                 _flickable_wantSwitchOn_FI.SetValue( flickable, mode );
         }
 
-        private static ConditionalWeakTable<ThingWithComps, CompBreakdownable> _breakdownables =
+        private static readonly ConditionalWeakTable<ThingWithComps, CompBreakdownable> _breakdownables =
             new ConditionalWeakTable<ThingWithComps, CompBreakdownable>();
 
         public static CompBreakdownable BreakdownableComp( this ThingWithComps parent )
@@ -78,7 +76,7 @@ namespace BackupPower
             return breakdownable;
         }
 
-        private static ConditionalWeakTable<ThingWithComps, CompPowerPlant> _powerplants =
+        private static readonly ConditionalWeakTable<ThingWithComps, CompPowerPlant> _powerplants =
             new ConditionalWeakTable<ThingWithComps, CompPowerPlant>();
 
         public static CompPowerPlant PowerPlantComp( this ThingWithComps parent )
@@ -90,7 +88,12 @@ namespace BackupPower
             return powerplant;
         }
 
-        private static MethodInfo _desiredOutputGetter_MI = AccessTools.PropertyGetter( typeof( CompPowerPlant ), "DesiredPowerOutput");
+        private static readonly MethodInfo _desiredOutputGetter_MI = typeof( CompPowerPlant )
+                                                                    .GetProperty(
+                                                                         "DesiredPowerOutput",
+                                                                         BindingFlags.Instance |
+                                                                         BindingFlags.NonPublic )
+                                                                    .GetMethod;
 
         public static float DesiredOutput( this CompPowerPlant plant )
         {
