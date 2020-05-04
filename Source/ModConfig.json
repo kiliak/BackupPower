@@ -9,20 +9,13 @@
     "git_repo": "BackupPower",
     "visibility": 0,
     "packageId": "fluffy.backuppower",
-    "changenote": "2020-05-04 11:05 :: Fluffy :: add minimum on time to stop flickering",
-    "changenotes": [
-        {
-            "repo": "BackupPower",
-            "hash": "f29112981b3e8f8e2a4887444013f942451cda73",
-            "date": "2020-05-04 11:05",
-            "author": "Fluffy",
-            "message": "add minimum on time to stop flickering"
-        }
-    ],
+    "changenote": "",
+    "changenotes": [],
     "contributors": {
         "Cenbes": "Control box texture"
     },
     "tags": [
         "1.1"
-    ]
+    ],
+    "publishedfileid": "2084493662"
 }
