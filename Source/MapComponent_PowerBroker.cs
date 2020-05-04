@@ -24,6 +24,7 @@ namespace BackupPower
 
         public static void RegisterBroker( Building_BackupPowerAttachment broker, bool update = false, Map map = null )
         {
+            if ( update ) DeregisterBroker( broker, map );
             For( map ?? broker.Map ).brokers.AddSafe( broker );
         }
 

@@ -15,18 +15,18 @@ namespace BackupPower
         public static void AddSafe<T>( this HashSet<T> set, T item )
         {
             if ( item == null )
-                throw new ArgumentNullException( nameof( item ) );
+                Verse.Log.ErrorOnce( "tried adding null element to hashset", 123411 );
             if ( set.Contains( item ) )
-                throw new ArgumentException( "hashset already contains this item", nameof( item ) );
+                Verse.Log.ErrorOnce( "tried adding duplicate item to hashset", 123412 );
             set.Add( item );
         }
 
         public static void RemoveSafe<T>( this HashSet<T> set, T item )
         {
-            if ( item == null )
-                throw new ArgumentNullException( nameof( item ) );
-            if ( !set.Contains( item ) )
-                throw new ArgumentException("hashset does not contain this item", nameof( item ) );
+            if ( item == null)
+                Verse.Log.ErrorOnce( "tried removing null element from hashset", 123413 );
+            if ( !set.Contains( item ))
+                Verse.Log.ErrorOnce( "tried removing item from hashset that it does not have", 123414 );
             set.Remove( item );
         }
 

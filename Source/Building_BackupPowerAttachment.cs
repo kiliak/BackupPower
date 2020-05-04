@@ -71,8 +71,8 @@ namespace BackupPower
 
         public override void Destroy( DestroyMode mode = DestroyMode.Vanish )
         {
-            MapComponent_PowerBroker.DeregisterBroker( this );
             base.Destroy( mode );
+            MapComponent_PowerBroker.DeregisterBroker( this );
         }
 
         public void TurnOn()
