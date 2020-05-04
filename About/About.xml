@@ -5,44 +5,37 @@
   <supportedVersions>
     <li>1.1</li>
   </supportedVersions>
-  <description>add control units to generators to automatically switch them on and off when needed
+  <description>
+    add control units to generators to automatically switch them on and off when needed
 
-&lt;size=24&gt;Features&lt;/size&gt;
-Adds generator control boxes, which will automatically turn the generators they are attached to on and off depending on current power levels.
+    &lt;size=24&gt;Features&lt;/size&gt;
+    Adds generator control boxes, which will automatically turn the generators they are attached to on and off depending on current power levels.
 
-Control boxes can be built after researching &lt;i&gt;Backup Power&lt;/i&gt;, a follow-up to &lt;i&gt;Microelectronics&lt;/i&gt;. Once researched, build a power control box on top of any generator to have it automatically toggled on/off depending on the electrical grid’s supply and demand.  
+    Control boxes can be built after researching &lt;i&gt;Backup Power&lt;/i&gt;, a follow-up to &lt;i&gt;Microelectronics&lt;/i&gt;. Once researched, build a power control box on top of any generator to have it automatically toggled on/off depending on the electrical grid’s supply and demand.
 
-Should work on any power generator that has the ‘flickable’ tag, so any vanilla or modded power producer that can be toggled on and off.
+    Should work on any power generator that has the ‘flickable’ tag, so any vanilla or modded power producer that can be toggled on and off.
 
-Control boxes have an indicator light that can take three colours:  
+    Control boxes have an indicator light that can take three colours:
 
 
-blue: control box is in standby, the generator is not currently needed.
-green: control box is active, the generator is running.
-red: control box error, the generator can not run.
+    blue: control box is in standby, the generator is not currently needed.
+    green: control box is active, the generator is running.
+    red: control box error, the generator can not run.
 
-&lt;size=24&gt;Known Issues&lt;/size&gt;
-None (yet).
+    &lt;size=24&gt;Known Issues&lt;/size&gt;
+    None (yet).
 
-&lt;size=24&gt;Contributors&lt;/size&gt;
+    &lt;size=24&gt;Contributors&lt;/size&gt;
 
-Cenbes:    Control box texture
+    Cenbes:    Control box texture
 
-&lt;size=24&gt;Version&lt;/size&gt;
-This is version 1.1.49, for RimWorld 1.1.2618.
+    &lt;size=24&gt;Version&lt;/size&gt;
+    This is version 1.1.50, for RimWorld 1.1.2618.
 
-</description>
+  </description>
   <url>https://ludeon.com/forums/index.php?topic=16120</url>
   <packageId>fluffy.backuppower</packageId>
-  <modDependencies>
-    <li>
-      <packageId>brrainz.harmony</packageId>
-      <displayName>Harmony</displayName>
-      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
-      <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
-    </li>
-  </modDependencies>
   <loadAfter>
-    <li>brrainz.harmony</li>
+    <li>Ludeon.RimWorld</li>
   </loadAfter>
 </ModMetaData>

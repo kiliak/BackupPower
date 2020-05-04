@@ -3,14 +3,22 @@
     "version": {
         "major": 1,
         "minor": 1,
-        "build": 49
+        "build": 50
     },
     "git_user": "fluffy-mods",
     "git_repo": "BackupPower",
     "visibility": 0,
     "packageId": "fluffy.backuppower",
     "changenote": "",
-    "changenotes": [],
+    "changenotes": [
+        {
+            "repo": "BackupPower",
+            "hash": "48719cd45a72897ea7d44eba89b2d6546cea32dc",
+            "date": "2020-05-04 14:05",
+            "author": "Fluffy",
+            "message": "Release 1.1.49 [nolog]"
+        }
+    ],
     "contributors": {
         "Cenbes": "Control box texture"
     },
