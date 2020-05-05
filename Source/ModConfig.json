@@ -3,14 +3,28 @@
     "version": {
         "major": 1,
         "minor": 3,
-        "build": 58
+        "build": 60
     },
     "git_user": "fluffy-mods",
     "git_repo": "BackupPower",
     "visibility": 0,
     "packageId": "fluffy.backuppower",
-    "changenote": "",
+    "changenote": "2020-05-05 10:05 :: Fluffy :: fix: building control box no longer removes generator (doh)\n2020-05-05 10:05 :: Fluffy :: fix: building control box no longer removes generator (doh)",
     "changenotes": [
+        {
+            "repo": "BackupPower",
+            "hash": "bf516e38387a2cc404e8e8e04afe2a70f35556eb",
+            "date": "2020-05-05 10:05",
+            "author": "Fluffy",
+            "message": "fix: building control box no longer removes generator (doh)"
+        },
+        {
+            "repo": "BackupPower",
+            "hash": "07d779165fc8a687f0b201ba9026590690d1e3bc",
+            "date": "2020-05-05 10:05",
+            "author": "Fluffy",
+            "message": "fix: building control box no longer removes generator (doh)"
+        },
         {
             "repo": "BackupPower",
             "hash": "5b7ba8b49c1ce11d6802b62a2550297582718f74",
