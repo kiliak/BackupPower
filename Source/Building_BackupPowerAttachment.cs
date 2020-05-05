@@ -111,11 +111,5 @@ namespace BackupPower
         public PowerNet PowerNet => Parent?.PowerComp?.PowerNet;
         public CompFlickable Flickable => Parent?.FlickableComp();
         public CompPowerPlant PowerPlant => Parent?.PowerPlantComp();
-
-        public override void ExposeData()
-        {
-            base.ExposeData();
-            Scribe_References.Look(ref _parent, "parent");
-        }
     }
 }
