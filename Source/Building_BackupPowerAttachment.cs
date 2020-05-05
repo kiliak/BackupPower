@@ -4,41 +4,42 @@
 using RimWorld;
 using UnityEngine;
 using Verse;
+using System;
 
 namespace BackupPower
 {
     public class Building_BackupPowerAttachment : Building
     {
-        public override void SpawnSetup( Map map, bool respawningAfterLoad )
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup( map, respawningAfterLoad );
+            base.SpawnSetup(map, respawningAfterLoad);
 
-            if ( !respawningAfterLoad )
-                TryAttach( Map );
+            if (!respawningAfterLoad)
+                TryAttach(Map);
         }
 
-        private static readonly Color StandByColor = new Color( 5   / 255f, 150 / 255f, 251 / 255f, 1f );
-        private static readonly Color ActiveColor  = new Color( 86  / 255f, 255 / 255f, 100 / 255f, 1f );
-        private static readonly Color ErrorColor   = new Color( 237 / 255f, 67  / 255f, 55  / 255f, 1f );
+        private static readonly Color StandByColor = new Color(5 / 255f, 150 / 255f, 251 / 255f, 1f);
+        private static readonly Color ActiveColor = new Color(86 / 255f, 255 / 255f, 100 / 255f, 1f);
+        private static readonly Color ErrorColor = new Color(237 / 255f, 67 / 255f, 55 / 255f, 1f);
 
         public override Color DrawColor
         {
             get
             {
-                if ( ( Parent?.BreakdownableComp()?.BrokenDown ?? false ) ||
-                     ( !Parent?.RefuelableComp()?.HasFuel      ?? false ) )
+                if ((Parent?.BreakdownableComp()?.BrokenDown ?? false) ||
+                     (!Parent?.RefuelableComp()?.HasFuel ?? false))
                     return ErrorColor;
-                if ( PowerPlant?.PowerOn ?? false )
+                if (PowerPlant?.PowerOn ?? false)
                     return ActiveColor;
                 return StandByColor;
             }
         }
 
-        private bool TryAttach( Map map, bool reAttach = false )
+        private bool TryAttach(Map map, bool reAttach = false)
         {
-            Parent = Position.GetEdifice( map );
+            Parent = Position.GetEdifice(map);
             var success = PowerPlant != null && Flickable != null;
-            if (success) MapComponent_PowerBroker.RegisterBroker( this, reAttach );
+            if (success) MapComponent_PowerBroker.RegisterBroker(this, reAttach);
             return success;
         }
 
@@ -48,37 +49,44 @@ namespace BackupPower
         {
             base.Notify_ColorChanged();
             // again, for good measure.
-            Map.mapDrawer.MapMeshDirty( Position, MapMeshFlag.Things );
+            Map.mapDrawer.MapMeshDirty(Position, MapMeshFlag.Things);
 
-            Log.Debug( $"changing color to: {DrawColor} (prev: {_prevColor}" );
+            Log.Debug($"changing color to: {DrawColor} (prev: {_prevColor}");
             _prevColor = DrawColor;
         }
 
         public override void Tick()
         {
-            if ( this.IsHashIntervalTick( 60 ) && _prevColor != DrawColor )
+            if (this.IsHashIntervalTick(60) && _prevColor != DrawColor)
                 Notify_ColorChanged();
 
             // TODO: think about refactoring this and hooking onto parents' Destroy() instead.
             base.Tick();
-            if ( Parent.DestroyedOrNull() && !TryAttach( Map, true ) )
+            if (Parent.DestroyedOrNull() && !TryAttach(Map, true))
             {
-                Messages.Message( I18n.AttachmentDestroyedBecauseParentGone( Parent?.Label ?? I18n.Generator ), MessageTypeDefOf.NegativeEvent,
-                                  false );
-                Destroy( DestroyMode.Refund );
+                Messages.Message(I18n.AttachmentDestroyedBecauseParentGone(Parent?.Label ?? I18n.Generator), MessageTypeDefOf.NegativeEvent,
+                                  false);
+                Destroy(DestroyMode.Refund);
             }
         }
 
-        public override void Destroy( DestroyMode mode = DestroyMode.Vanish )
+        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
-            base.Destroy( mode );
-            MapComponent_PowerBroker.DeregisterBroker( this );
+            try
+            {
+                MapComponent_PowerBroker.DeregisterBroker(this);
+            }
+            catch (Exception err)
+            {
+                Verse.Log.Error($"Error deregistering broker: {err}");
+            }
+            base.Destroy(mode);
         }
 
         public void TurnOn()
         {
             _lastOnTick = Find.TickManager.TicksGame;
-            Flickable.Force( true );
+            Flickable.Force(true);
         }
 
         public bool CanTurnOff()
@@ -88,7 +96,7 @@ namespace BackupPower
 
         public void TurnOff()
         {
-            Flickable.Force( false );
+            Flickable.Force(false);
         }
 
         private Building _parent;
@@ -100,14 +108,14 @@ namespace BackupPower
             private set => _parent = value;
         }
 
-        public PowerNet       PowerNet   => Parent?.PowerComp?.PowerNet;
-        public CompFlickable  Flickable  => Parent?.FlickableComp();
+        public PowerNet PowerNet => Parent?.PowerComp?.PowerNet;
+        public CompFlickable Flickable => Parent?.FlickableComp();
         public CompPowerPlant PowerPlant => Parent?.PowerPlantComp();
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_References.Look( ref _parent, "parent" );
+            Scribe_References.Look(ref _parent, "parent");
         }
     }
 }

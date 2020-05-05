@@ -18,6 +18,7 @@
         <label>backup power control box</label>
         <description>A generator fitted with a backup power control box will automatically switch on and off depending on power requirements.</description>
         <thingClass>BackupPower.Building_BackupPowerAttachment</thingClass>
+        <clearBuildingArea>false</clearBuildingArea>
         <designationCategory>Power</designationCategory>
         <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
         <altitudeLayer>BuildingOnTop</altitudeLayer>
@@ -26,7 +27,6 @@
             <WorkToBuild>1000</WorkToBuild>
             <Mass>20</Mass>
             <Flammability>1.0</Flammability>
-            <Beauty>-5</Beauty>
         </statBases>
         <stuffCategories>
             <li>Metallic</li>

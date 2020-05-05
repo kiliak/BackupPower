@@ -3,7 +3,7 @@
     "version": {
         "major": 1,
         "minor": 3,
-        "build": 52
+        "build": 58
     },
     "git_user": "fluffy-mods",
     "git_repo": "BackupPower",
@@ -11,6 +11,13 @@
     "packageId": "fluffy.backuppower",
     "changenote": "",
     "changenotes": [
+        {
+            "repo": "BackupPower",
+            "hash": "5b7ba8b49c1ce11d6802b62a2550297582718f74",
+            "date": "2020-05-04 23:05",
+            "author": "Fluffy",
+            "message": "Release 1.3.52 [nolog]"
+        },
         {
             "repo": "BackupPower",
             "hash": "5453e9029010379e57420beb6fd4344f8b55c835",
