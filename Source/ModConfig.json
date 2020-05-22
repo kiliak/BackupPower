@@ -2,15 +2,23 @@
     "name": "Backup Power",
     "version": {
         "major": 1,
-        "minor": 4,
-        "build": 149
+        "minor": 5,
+        "build": 152
     },
     "git_user": "fluffy-mods",
     "git_repo": "BackupPower",
     "visibility": 0,
     "packageId": "fluffy.backuppower",
-    "changenote": "",
-    "changenotes": [],
+    "changenote": "2020-05-22 14:05 :: Fluffy :: add battery widget",
+    "changenotes": [
+        {
+            "repo": "BackupPower",
+            "hash": "91cd6c27e94231fce81cec92a9506b50b24852b7",
+            "date": "2020-05-22 14:05",
+            "author": "Fluffy",
+            "message": "add battery widget"
+        }
+    ],
     "contributors": {
         "Cenbes": "Control box texture"
     },
