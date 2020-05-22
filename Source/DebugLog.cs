@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// DebugLog.cs
+// Copyright Karel Kroeze, 2020-2020
+
+using System.Diagnostics;
 
 namespace BackupPower
 {
-	static class Log
-	{
-		[System.Diagnostics.Conditional("DEBUG")]
-		public static void Debug( string msg ){
-			Message( msg );
-		}
+    internal static class Log
+    {
+        [Conditional( "DEBUG" )]
+        public static void Debug( string msg )
+        {
+            Message( msg );
+        }
 
-		public static void Message(string msg )
-		{
-			Verse.Log.Message( $"BackupPower :: {msg}");
-		}
-	}
+        public static void Message( string msg )
+        {
+            Verse.Log.Message( $"BackupPower :: {msg}" );
+        }
+    }
 }

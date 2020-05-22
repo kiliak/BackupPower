@@ -1,16 +1,15 @@
 ﻿// PlaceWorker_OnFlickablePowerPlant.cs
-// Copyright Karel Kroeze, -2020
+// Copyright Karel Kroeze, 2020-2020
 
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using RimWorld;
 using Verse;
 
 namespace BackupPower
 {
-    public class PlaceWorker_OnFlickablePowerPlant: PlaceWorker
+    public class PlaceWorker_OnFlickablePowerPlant : PlaceWorker
     {
-        public override AcceptanceReport AllowsPlacing( BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null, Thing thing = null )
+        public override AcceptanceReport AllowsPlacing( BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map,
+                                                        Thing thingToIgnore = null, Thing thing = null )
         {
             // there's a power plant or battery here.
             var edifice = loc.GetEdifice( map );

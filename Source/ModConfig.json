@@ -3,22 +3,14 @@
     "version": {
         "major": 1,
         "minor": 6,
-        "build": 154
+        "build": 155
     },
     "git_user": "fluffy-mods",
     "git_repo": "BackupPower",
     "visibility": 0,
     "packageId": "fluffy.backuppower",
-    "changenote": "2020-05-22 15:05 :: Fluffy :: allow turning backups off when excess would be zero",
-    "changenotes": [
-        {
-            "repo": "BackupPower",
-            "hash": "733996b78fa6e7092fad329c03e3881fff63afb6",
-            "date": "2020-05-22 15:05",
-            "author": "Fluffy",
-            "message": "allow turning backups off when excess would be zero"
-        }
-    ],
+    "changenote": "",
+    "changenotes": [],
     "contributors": {
         "Cenbes": "Control box texture"
     },

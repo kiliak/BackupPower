@@ -1,11 +1,11 @@
 ﻿// Building_BackupPowerAttachment.cs
-// Copyright Karel Kroeze, -2020
+// Copyright Karel Kroeze, 2020-2020
 
+using System;
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using System;
-using System.Collections.Generic;
 
 namespace BackupPower
 {
@@ -18,17 +18,18 @@ namespace BackupPower
 
     public class Building_BackupPowerAttachment : Building
     {
-        public FloatRange batteryRange = FloatRange.One;
+        public  FloatRange           batteryRange = FloatRange.One;
         private Command_BatteryRange _command;
+        private int                  _lastOnTick;
 
-        public override void SpawnSetup(Map map, bool respawningAfterLoad)
-        {
-            base.SpawnSetup(map, respawningAfterLoad);
-            _command = new Command_BatteryRange( this );
+        private         Color         _prevColor;
+        public override Color         DrawColor => Resources.StatusColor( Status );
+        public          CompFlickable Flickable => Parent?.FlickableComp();
 
-            if (!respawningAfterLoad)
-                TryAttach(Map);
-        }
+        public Building Parent { get; private set; }
+
+        public PowerNet       PowerNet   => Parent?.PowerComp?.PowerNet;
+        public CompPowerPlant PowerPlant => Parent?.PowerPlantComp();
 
 
         public BackupPowerStatus Status
@@ -44,34 +45,28 @@ namespace BackupPower
             }
         }
 
-        public override string GetInspectString()
+        public bool CanTurnOff()
         {
-            var desc = base.GetInspectString();
-            return I18n.StatusString( Status, batteryRange.min, batteryRange.max, PowerNet.StorageLevel() ) +
-                   ( desc.NullOrEmpty() ? "" : $"\n{desc}" );
-        }
-        public override Color DrawColor => Resources.StatusColor( Status );
-
-        private bool TryAttach(Map map, bool reAttach = false)
-        {
-            Parent = Position.GetEdifice(map);
-            var success = PowerPlant != null && Flickable != null;
-            if (success) MapComponent_PowerBroker.RegisterBroker(this, reAttach);
-            return success;
-        }
-
-        private Color _prevColor;
-        public override void Notify_ColorChanged()
-        {
-            base.Notify_ColorChanged();
-            // again, for good measure.
-            Map.mapDrawer.MapMeshDirty(Position, MapMeshFlag.Things);
-            _prevColor = DrawColor;
+            return _lastOnTick + BackupPower.Settings.MinimumOnTime < Find.TickManager.TicksGame;
         }
 
         public void CopySettingsTo( Building_BackupPowerAttachment other )
         {
             other.batteryRange = batteryRange;
+        }
+
+        public override void Destroy( DestroyMode mode = DestroyMode.Vanish )
+        {
+            try
+            {
+                MapComponent_PowerBroker.DeregisterBroker( this );
+            }
+            catch ( Exception err )
+            {
+                Verse.Log.Error( $"Error deregistering broker: {err}" );
+            }
+
+            base.Destroy( mode );
         }
 
         public override void ExposeData()
@@ -88,61 +83,63 @@ namespace BackupPower
                 yield return _gizmo;
         }
 
+        public override string GetInspectString()
+        {
+            var desc = base.GetInspectString();
+            return I18n.StatusString( Status, batteryRange.min, batteryRange.max, PowerNet.StorageLevel() ) +
+                   ( desc.NullOrEmpty() ? "" : $"\n{desc}" );
+        }
+
+        public override void Notify_ColorChanged()
+        {
+            base.Notify_ColorChanged();
+            // again, for good measure.
+            Map.mapDrawer.MapMeshDirty( Position, MapMeshFlag.Things );
+            _prevColor = DrawColor;
+        }
+
+        public override void SpawnSetup( Map map, bool respawningAfterLoad )
+        {
+            base.SpawnSetup( map, respawningAfterLoad );
+            _command = new Command_BatteryRange( this );
+
+            if ( !respawningAfterLoad )
+                TryAttach( Map );
+        }
+
         public override void Tick()
         {
-            if (this.IsHashIntervalTick(60) && _prevColor != DrawColor)
+            if ( this.IsHashIntervalTick( 60 ) && _prevColor != DrawColor )
                 Notify_ColorChanged();
 
             // TODO: think about refactoring this and hooking onto parents' Destroy() instead.
             base.Tick();
-            if (Parent.DestroyedOrNull() && !TryAttach(Map, true))
+            if ( Parent.DestroyedOrNull() && !TryAttach( Map, true ) )
             {
-                Messages.Message(I18n.AttachmentDestroyedBecauseParentGone(Parent?.Label ?? I18n.Generator), MessageTypeDefOf.NegativeEvent,
-                                  false);
-                Destroy(DestroyMode.Refund);
+                Messages.Message( I18n.AttachmentDestroyedBecauseParentGone( Parent?.Label ?? I18n.Generator ),
+                                  MessageTypeDefOf.NegativeEvent,
+                                  false );
+                Destroy( DestroyMode.Refund );
             }
         }
 
-        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
+        public void TurnOff()
         {
-            try
-            {
-                MapComponent_PowerBroker.DeregisterBroker(this);
-            }
-            catch (Exception err)
-            {
-                Verse.Log.Error($"Error deregistering broker: {err}");
-            }
-            base.Destroy(mode);
+            Flickable.Force( false );
         }
 
         public void TurnOn()
         {
             _lastOnTick = Find.TickManager.TicksGame;
-            Flickable.Force(true);
+            Flickable.Force( true );
         }
 
-        public bool CanTurnOff()
+        private bool TryAttach( Map map, bool reAttach = false )
         {
-            return _lastOnTick + BackupPower.Settings.MinimumOnTime < Find.TickManager.TicksGame;
+            Parent = Position.GetEdifice( map );
+            var success = PowerPlant != null && Flickable != null;
+            if ( success ) MapComponent_PowerBroker.RegisterBroker( this, reAttach );
+            return success;
         }
-
-        public void TurnOff()
-        {
-            Flickable.Force(false);
-        }
-
-        private Building _parent;
-        private int _lastOnTick;
-
-        public Building Parent
-        {
-            get => _parent;
-            private set => _parent = value;
-        }
-
-        public PowerNet PowerNet => Parent?.PowerComp?.PowerNet;
-        public CompFlickable Flickable => Parent?.FlickableComp();
-        public CompPowerPlant PowerPlant => Parent?.PowerPlantComp();
     }
 }

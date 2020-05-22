@@ -1,5 +1,5 @@
 ﻿// MapComponent_PowerBroker.cs
-// Copyright Karel Kroeze, -2020
+// Copyright Karel Kroeze, 2020-2020
 
 using System;
 using System.Collections.Generic;
@@ -14,53 +14,90 @@ namespace BackupPower
     public class MapComponent_PowerBroker : MapComponent
     {
         public HashSet<Building_BackupPowerAttachment> brokers = new HashSet<Building_BackupPowerAttachment>();
-        public MapComponent_PowerBroker(Map map) : base(map)
+
+        public MapComponent_PowerBroker( Map map ) : base( map )
         {
         }
 
-        public static MapComponent_PowerBroker For([NotNull]Map map)
+        public static void DeregisterBroker( [NotNull] Building_BackupPowerAttachment broker )
+        {
+            For( broker.Map ).brokers.RemoveSafe( broker );
+        }
+
+        public static MapComponent_PowerBroker For( [NotNull] Map map )
         {
             return map?.GetComponent<MapComponent_PowerBroker>();
         }
 
-        public static void RegisterBroker([NotNull] Building_BackupPowerAttachment broker, bool update = false)
+        public static void RegisterBroker( [NotNull] Building_BackupPowerAttachment broker, bool update = false )
         {
-            var comp = For(broker.Map);
-            if (update) comp.brokers.Remove(broker);
-            comp.brokers.AddSafe(broker);
+            var comp = For( broker.Map );
+            if ( update ) comp.brokers.Remove( broker );
+            comp.brokers.AddSafe( broker );
         }
 
-        public static void DeregisterBroker([NotNull] Building_BackupPowerAttachment broker)
+        public float Consumption( CompPowerTrader comp )
         {
-            For(broker.Map).brokers.RemoveSafe(broker);
+            if ( !comp.PowerOn && !FlickUtility.WantsToBeOn( comp.parent ) )
+                return 0;
+
+            return Mathf.Max( -comp.PowerOutput, 0f );
+        }
+
+        public float CurrentProduction( CompPowerTrader comp )
+        {
+            if ( !( comp is CompPowerPlant plant ) )
+                return 0;
+
+            if ( !plant.PowerOn )
+                return 0;
+
+            return Mathf.Max( plant.PowerOutput, 0 );
         }
 
         public override void MapComponentTick()
         {
             base.MapComponentTick();
-            if (Find.TickManager.TicksGame % BackupPower.Settings.UpdateInterval != 0)
+            if ( Find.TickManager.TicksGame % BackupPower.Settings.UpdateInterval != 0 )
                 return;
 
-            foreach (var group in brokers.Where(b => b.PowerNet != null)
-                                          .GroupBy(b => b.PowerNet))
-                PowerNetUpdate(group.Key, new HashSet<Building_BackupPowerAttachment>(group));
+            foreach ( var group in brokers.Where( b => b.PowerNet != null )
+                                          .GroupBy( b => b.PowerNet ) )
+                PowerNetUpdate( group.Key, new HashSet<Building_BackupPowerAttachment>( group ) );
         }
 
-        public void PowerNetUpdate(PowerNet net, HashSet<Building_BackupPowerAttachment> brokers)
+        public float PotentialProduction( CompPowerTrader comp )
+        {
+            if ( !( comp is CompPowerPlant plant ) )
+                return 0;
+
+            var refuelable = plant.parent.RefuelableComp();
+            if ( refuelable != null && !refuelable.HasFuel )
+                return 0;
+
+            var breakdownable = plant.parent.BreakdownableComp();
+            if ( breakdownable != null && breakdownable.BrokenDown )
+                return 0;
+
+            // TODO: check how this interacts with variable power output buildings, e.g. solar, wind.
+            return Mathf.Max( plant.DesiredOutput(), plant.PowerOutput, 0 );
+        }
+
+        public void PowerNetUpdate( PowerNet net, HashSet<Building_BackupPowerAttachment> brokers )
         {
             // get desired power
             var users = net.powerComps
-                           .Select(p => (comp: p,
-                                          broker: (p.parent is Building building)
-                                              ? brokers.FirstOrDefault(b => b.Parent == building)
-                                              : null,
-                                          consumption: Consumption(p),
-                                          currentProduction: CurrentProduction(p),
-                                          potentialProduction: PotentialProduction(p)));
+                           .Select( p => ( comp: p,
+                                           broker: p.parent is Building building
+                                               ? brokers.FirstOrDefault( b => b.Parent == building )
+                                               : null,
+                                           consumption: Consumption( p ),
+                                           currentProduction: CurrentProduction( p ),
+                                           potentialProduction: PotentialProduction( p ) ) );
 
-            var need = users.Sum(u => u.consumption);
-            var production = users.Sum(u => u.currentProduction);
-            var hasStorage = net.HasStorage();
+            var need         = users.Sum( u => u.consumption );
+            var production   = users.Sum( u => u.currentProduction );
+            var hasStorage   = net.HasStorage();
             var storageLevel = net.StorageLevel();
 
             // Log.Debug( $"need: {need}, production: {production}, static: {staticProduction}" );
@@ -80,7 +117,7 @@ namespace BackupPower
                     backup.broker.TurnOff();
             }
 
-            if (production < need || hasStorage && storageLevel < 1 )
+            if ( production < need || hasStorage && storageLevel < 1 )
             {
                 // try to turn backups on
                 var backups = users.Where( u => u.broker                        != null
@@ -92,42 +129,6 @@ namespace BackupPower
                 if ( backups.TryRandomElementByWeight( c => c.potentialProduction, out var backup ) )
                     backup.broker.TurnOn();
             }
-        }
-
-        public float PotentialProduction(CompPowerTrader comp)
-        {
-            if (!(comp is CompPowerPlant plant))
-                return 0;
-
-            var refuelable = plant.parent.RefuelableComp();
-            if (refuelable != null && !refuelable.HasFuel)
-                return 0;
-
-            var breakdownable = plant.parent.BreakdownableComp();
-            if (breakdownable != null && breakdownable.BrokenDown)
-                return 0;
-
-            // TODO: check how this interacts with variable power output buildings, e.g. solar, wind.
-            return Mathf.Max(plant.DesiredOutput(), plant.PowerOutput, 0);
-        }
-
-        public float CurrentProduction(CompPowerTrader comp)
-        {
-            if (!(comp is CompPowerPlant plant))
-                return 0;
-
-            if (!plant.PowerOn)
-                return 0;
-
-            return Mathf.Max(plant.PowerOutput, 0);
-        }
-
-        public float Consumption(CompPowerTrader comp)
-        {
-            if (!comp.PowerOn && !FlickUtility.WantsToBeOn(comp.parent))
-                return 0;
-
-            return Mathf.Max(-comp.PowerOutput, 0f);
         }
     }
 }
