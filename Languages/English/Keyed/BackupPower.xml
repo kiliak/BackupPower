@@ -15,4 +15,19 @@
     <Fluffy.BackupPower.AttachmentDestroyedBecauseParentGone>Backup power control box destroyed because the {0} it was attached to was destroyed.</Fluffy.BackupPower.AttachmentDestroyedBecauseParentGone>
     <!-- default if we don't have a more specific label above -->
     <Fluffy.BackupPower.Generator>generator</Fluffy.BackupPower.Generator>
+
+    <!-- battery level command -->
+    <Fluffy.BackupPower.Status.Standby>Standby</Fluffy.BackupPower.Status.Standby>
+    <Fluffy.BackupPower.Status.Running>Running</Fluffy.BackupPower.Status.Running>
+    <Fluffy.BackupPower.Status.Error>Error</Fluffy.BackupPower.Status.Error>
+    <Fluffy.BackupPower.CurrentStatus>Current status: {0}</Fluffy.BackupPower.CurrentStatus>
+    <Fluffy.BackupPower.CurrentStorage>Power stored: {0}</Fluffy.BackupPower.CurrentStorage>
+    <Fluffy.BackupPower.TurnsOnBelow>Turns on below: {0}</Fluffy.BackupPower.TurnsOnBelow>
+    <Fluffy.BackupPower.TurnsOffAbove>Turns off above: {0}</Fluffy.BackupPower.TurnsOffAbove>
+    <Fluffy.BackupPower.CommandLabel>Power Control</Fluffy.BackupPower.CommandLabel>
+
+    <Fluffy.BackupPower.CopyTo>Copy settings to:</Fluffy.BackupPower.CopyTo>
+    <Fluffy.BackupPower.CopyTo.Room>Room</Fluffy.BackupPower.CopyTo.Room>
+    <Fluffy.BackupPower.CopyTo.Connected>Connected</Fluffy.BackupPower.CopyTo.Connected>
+    <Fluffy.BackupPower.CopyTo.All>All</Fluffy.BackupPower.CopyTo.All>
 </LanguageData>

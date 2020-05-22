@@ -60,55 +60,37 @@ namespace BackupPower
 
             var need = users.Sum(u => u.consumption);
             var production = users.Sum(u => u.currentProduction);
-            var staticProduction = users.Where(u => u.broker == null).Sum(u => u.currentProduction);
+            var hasStorage = net.HasStorage();
+            var storageLevel = net.StorageLevel();
 
-            //            Log.Debug( $"need: {need}, production: {production}, static: {staticProduction}" );
+            // Log.Debug( $"need: {need}, production: {production}, static: {staticProduction}" );
 
-            if (production > need)
+            if ( production > need || hasStorage && storageLevel > 0 )
             {
                 // try to shut backups off
                 var overProduction = production - need;
-                var backups = users.Where(u => u.currentProduction > 0
-                                            && u.currentProduction < overProduction
-                                            && u.broker != null
-                                            && u.broker.CanTurnOff())
+                var backups = users.Where( u => u.broker            != null
+                                             && u.currentProduction > 0
+                                             && u.currentProduction < overProduction
+                                             && ( !hasStorage || storageLevel >= u.broker.batteryRange.max )
+                                             && u.broker.CanTurnOff() )
                                    .ToList();
 
-                while (backups.Any())
-                {
-                    // TODO: implement knapsack packing to optimise assignment, or keep it random?
-                    var backup = backups.RandomElementByWeight(c => 1 / c.currentProduction); // weight smaller producers to turn off first.
-
-                    // turn it off
+                if ( backups.TryRandomElementByWeight( c => 1 / c.currentProduction, out var backup ) )
                     backup.broker.TurnOff();
-
-                    // remove invalid backups from the list
-                    overProduction -= backup.currentProduction;
-                    backups = backups.Where(b => b != backup && b.currentProduction < overProduction).ToList();
-                }
             }
 
-            if (production < need)
+            if (production < need || hasStorage && storageLevel < 1 )
             {
                 // try to turn backups on
-                var underProduction = need - production;
-                var backups = users.Where(u => Math.Abs(u.currentProduction) < Mathf.Epsilon
-                                            && u.potentialProduction > 0
-                                            && u.broker != null)
+                var backups = users.Where( u => u.broker                        != null
+                                             && Math.Abs( u.currentProduction ) < Mathf.Epsilon
+                                             && u.potentialProduction           > 0
+                                             && ( !hasStorage || storageLevel <= u.broker.batteryRange.min ) )
                                    .ToList();
 
-                while (underProduction > 0 && backups.Any())
-                {
-                    // TODO: implement knapsack packing to optimise assignment, or keep it random?
-                    var backup = backups.RandomElementByWeight(c => c.potentialProduction); // weight larger producers to turn on first.
-
-                    // turn it on
+                if ( backups.TryRandomElementByWeight( c => c.potentialProduction, out var backup ) )
                     backup.broker.TurnOn();
-
-                    // remove invalid backups from the list
-                    underProduction -= backup.potentialProduction;
-                    backups.Remove(backup);
-                }
             }
         }
 

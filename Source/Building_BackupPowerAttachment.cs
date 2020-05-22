@@ -5,35 +5,52 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 using System;
+using System.Collections.Generic;
 
 namespace BackupPower
 {
+    public enum BackupPowerStatus
+    {
+        Standby,
+        Running,
+        Error
+    }
+
     public class Building_BackupPowerAttachment : Building
     {
+        public FloatRange batteryRange = FloatRange.One;
+        private Command_BatteryRange _command;
+
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
+            _command = new Command_BatteryRange( this );
 
             if (!respawningAfterLoad)
                 TryAttach(Map);
         }
 
-        private static readonly Color StandByColor = new Color(5 / 255f, 150 / 255f, 251 / 255f, 1f);
-        private static readonly Color ActiveColor = new Color(86 / 255f, 255 / 255f, 100 / 255f, 1f);
-        private static readonly Color ErrorColor = new Color(237 / 255f, 67 / 255f, 55 / 255f, 1f);
 
-        public override Color DrawColor
+        public BackupPowerStatus Status
         {
             get
             {
-                if ((Parent?.BreakdownableComp()?.BrokenDown ?? false) ||
-                     (!Parent?.RefuelableComp()?.HasFuel ?? false))
-                    return ErrorColor;
-                if (PowerPlant?.PowerOn ?? false)
-                    return ActiveColor;
-                return StandByColor;
+                if ( ( Parent?.BreakdownableComp()?.BrokenDown ?? false ) ||
+                     ( !Parent?.RefuelableComp()?.HasFuel      ?? false ) )
+                    return BackupPowerStatus.Error;
+                if ( PowerPlant?.PowerOn ?? false )
+                    return BackupPowerStatus.Running;
+                return BackupPowerStatus.Standby;
             }
         }
+
+        public override string GetInspectString()
+        {
+            var desc = base.GetInspectString();
+            return I18n.StatusString( Status, batteryRange.min, batteryRange.max, PowerNet.StorageLevel() ) +
+                   ( desc.NullOrEmpty() ? "" : $"\n{desc}" );
+        }
+        public override Color DrawColor => Resources.StatusColor( Status );
 
         private bool TryAttach(Map map, bool reAttach = false)
         {
@@ -44,15 +61,31 @@ namespace BackupPower
         }
 
         private Color _prevColor;
-
         public override void Notify_ColorChanged()
         {
             base.Notify_ColorChanged();
             // again, for good measure.
             Map.mapDrawer.MapMeshDirty(Position, MapMeshFlag.Things);
-
-            Log.Debug($"changing color to: {DrawColor} (prev: {_prevColor}");
             _prevColor = DrawColor;
+        }
+
+        public void CopySettingsTo( Building_BackupPowerAttachment other )
+        {
+            other.batteryRange = batteryRange;
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+
+            Scribe_Values.Look( ref batteryRange, "batteryRange", FloatRange.One );
+        }
+
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            yield return _command;
+            foreach ( var _gizmo in base.GetGizmos() )
+                yield return _gizmo;
         }
 
         public override void Tick()

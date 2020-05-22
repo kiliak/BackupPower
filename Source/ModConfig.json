@@ -3,50 +3,14 @@
     "version": {
         "major": 1,
         "minor": 4,
-        "build": 61
+        "build": 149
     },
     "git_user": "fluffy-mods",
     "git_repo": "BackupPower",
     "visibility": 0,
     "packageId": "fluffy.backuppower",
-    "changenote": "2020-05-05 10:05 :: Fluffy :: fix reinitializing control boxes on game load\n2020-05-05 10:05 :: Fluffy :: fix: building control box no longer removes generator (doh)\n2020-05-05 10:05 :: Fluffy :: fix: building control box no longer removes generator (doh)",
-    "changenotes": [
-        {
-            "repo": "BackupPower",
-            "hash": "30baae9f78c5efe40705de8b0ba5d86299c26061",
-            "date": "2020-05-05 10:05",
-            "author": "Fluffy",
-            "message": "fix reinitializing control boxes on game load"
-        },
-        {
-            "repo": "BackupPower",
-            "hash": "bf516e38387a2cc404e8e8e04afe2a70f35556eb",
-            "date": "2020-05-05 10:05",
-            "author": "Fluffy",
-            "message": "fix: building control box no longer removes generator (doh)"
-        },
-        {
-            "repo": "BackupPower",
-            "hash": "07d779165fc8a687f0b201ba9026590690d1e3bc",
-            "date": "2020-05-05 10:05",
-            "author": "Fluffy",
-            "message": "fix: building control box no longer removes generator (doh)"
-        },
-        {
-            "repo": "BackupPower",
-            "hash": "5b7ba8b49c1ce11d6802b62a2550297582718f74",
-            "date": "2020-05-04 23:05",
-            "author": "Fluffy",
-            "message": "Release 1.3.52 [nolog]"
-        },
-        {
-            "repo": "BackupPower",
-            "hash": "5453e9029010379e57420beb6fd4344f8b55c835",
-            "date": "2020-05-04 23:05",
-            "author": "Fluffy",
-            "message": "Release 1.3.52 [nolog]"
-        }
-    ],
+    "changenote": "",
+    "changenotes": [],
     "contributors": {
         "Cenbes": "Control box texture"
     },

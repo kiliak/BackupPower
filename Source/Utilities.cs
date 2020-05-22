@@ -3,10 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using RimWorld;
+using UnityEngine;
 using Verse;
+using Verse.AI.Group;
 
 namespace BackupPower
 {
@@ -19,6 +22,57 @@ namespace BackupPower
             if ( set.Contains( item ) )
                 Verse.Log.ErrorOnce( "tried adding duplicate item to hashset", 123412 );
             set.Add( item );
+        }
+
+        public static Rect MiddlePart( this Rect rect, float left = 0f, float right = 0f, float top = 0f, float bottom = 0f )
+        {
+            return new Rect( rect.xMin + rect.width  * left,
+                             rect.yMin + rect.height * top,
+                             rect.width  * ( 1 - left - right ),
+                             rect.height * ( 1 - top  - bottom ) );
+        }
+
+        public static bool HasStorage( this PowerNet net )
+        {
+            return !net.batteryComps.NullOrEmpty();
+        }
+
+        public static string Bold( this string msg)
+        {
+            return $"<b>{msg}</b>";
+        }
+
+        public static float StorageLevel( this PowerNet net )
+        {
+            if ( net.batteryComps.NullOrEmpty() ) return 0;
+
+            var (current, max) = net.batteryComps
+                                       .Select( b => ( b.StoredEnergy, b.Props.storedEnergyMax ) )
+                                       .Aggregate( ( a, b ) => (
+                                                       a.StoredEnergy    + b.StoredEnergy,
+                                                       a.storedEnergyMax + b.storedEnergyMax ) );
+            return current / max;
+        }
+
+        public static void DrawLineDashed( Vector2 start, Vector2 end, Color? color = null, float size = 1, float stroke = 5,
+                                           float dash = 3)
+        {
+            var partLength = dash + stroke;
+            var totalLength = ( end - start ).magnitude;
+            var direction = ( end - start ).normalized;
+            var done = 0f;
+            while ( done < totalLength )
+            {
+                var _start = start + done * direction;
+                var _end = start + Mathf.Min( done + stroke, totalLength ) * direction;
+                Widgets.DrawLine( _start, _end, color.GetValueOrDefault( Color.white ), size );
+                done += partLength;
+            }
+        }
+
+        public static Vector2 BottomLeft( this Rect rect )
+        {
+            return new Vector2( rect.xMin, rect.yMax );
         }
 
         public static void RemoveSafe<T>( this HashSet<T> set, T item )
@@ -99,5 +153,11 @@ namespace BackupPower
         {
             return (float) _desiredOutputGetter_MI.Invoke( plant, null );
         }
+    }
+
+    [RimWorld.DefOf]
+    public static class DefOf
+    {
+        public static ThingDef BackupPower_Attachment;
     }
 }
