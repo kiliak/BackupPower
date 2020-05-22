@@ -71,7 +71,7 @@ namespace BackupPower
                 var overProduction = production - need;
                 var backups = users.Where( u => u.broker            != null
                                              && u.currentProduction > 0
-                                             && u.currentProduction < overProduction
+                                             && u.currentProduction <= overProduction
                                              && ( !hasStorage || storageLevel >= u.broker.batteryRange.max )
                                              && u.broker.CanTurnOff() )
                                    .ToList();
