@@ -2,8 +2,8 @@
     "name": "Backup Power",
     "version": {
         "major": 1,
-        "minor": 6,
-        "build": 156
+        "minor": 7,
+        "build": 157
     },
     "git_user": "fluffy-mods",
     "git_repo": "BackupPower",
@@ -11,6 +11,13 @@
     "packageId": "fluffy.backuppower",
     "changenote": "",
     "changenotes": [
+        {
+            "repo": "BackupPower",
+            "hash": "53d65f7c6ce99b37a9274d9f1eb580e7ab1b4ac0",
+            "date": "2020-05-22 19:05",
+            "author": "Fluffy",
+            "message": "translate title [nolog]"
+        },
         {
             "repo": "BackupPower",
             "hash": "d014057f372999ef63893267de7d0a777d88d14b",
