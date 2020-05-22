@@ -24,7 +24,7 @@ namespace BackupPower
 
         public override string SettingsCategory()
         {
-            return "Backup Power";
+            return I18n.BackupPower;
         }
     }
 }

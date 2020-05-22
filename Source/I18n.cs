@@ -8,6 +8,7 @@ namespace BackupPower
 {
     public static class I18n
     {
+        public static string BackupPower                          = "Fluffy.BackupPower".Translate();
         public static string PlaceWorker_PlaceOnPowerPlant        = Translate( "PlaceWorker.PlaceOnPowerPlant" );
         public static string PlaceWorker_PlaceOnFlickable         = Translate( "PlaceWorker.PlaceOnFlickable" );
         public static string PlaceWorker_OnlyOneAttachmentAllowed = Translate( "PlaceWorker.OnlyOneAttachmentAllowed" );
