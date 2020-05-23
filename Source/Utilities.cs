@@ -145,8 +145,8 @@ namespace BackupPower
 
         public static float StorageLevel( this PowerNet net )
         {
-            if ( net.batteryComps.NullOrEmpty() ) return 0;
-
+            if ( net == null || net.batteryComps.NullOrEmpty() ) return 0;
+            
             var (current, max) = net.batteryComps
                                     .Select( b => ( b.StoredEnergy, b.Props.storedEnergyMax ) )
                                     .Aggregate( ( a, b ) => (
