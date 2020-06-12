@@ -2,23 +2,15 @@
     "name": "Backup Power",
     "version": {
         "major": 1,
-        "minor": 8,
-        "build": 159
+        "minor": 9,
+        "build": 160
     },
     "git_user": "fluffy-mods",
     "git_repo": "BackupPower",
     "visibility": 0,
     "packageId": "fluffy.backuppower",
-    "changenote": "2020-05-23 11:05 :: Fluffy :: additional nullcheck in PowerNet.StorageLevel",
-    "changenotes": [
-        {
-            "repo": "BackupPower",
-            "hash": "98d911573b89f834dbc400986cf4f1b14a9ff5cd",
-            "date": "2020-05-23 11:05",
-            "author": "Fluffy",
-            "message": "additional nullcheck in PowerNet.StorageLevel"
-        }
-    ],
+    "changenote": "",
+    "changenotes": [],
     "contributors": {
         "Cenbes": "Control box texture"
     },
