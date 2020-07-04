@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+    <Fluffy.BackupPower>Alimentation de secours</Fluffy.BackupPower>
+
+    <!-- placeworker error messages -->
+    <Fluffy.BackupPower.PlaceWorker.PlaceOnPowerPlant>doit être placé sur un groupe électrogène</Fluffy.BackupPower.PlaceWorker.PlaceOnPowerPlant>
+    <Fluffy.BackupPower.PlaceWorker.PlaceOnFlickable>doit être placé sur un générateur qui peut être allumé et éteint</Fluffy.BackupPower.PlaceWorker.PlaceOnFlickable>
+    <Fluffy.BackupPower.PlaceWorker.OnlyOneAttachmentAllowed>un seul contrôleur d'alimentation de secours est autorisé par générateur</Fluffy.BackupPower.PlaceWorker.OnlyOneAttachmentAllowed>
+
+    <!-- settings -->
+    <Fluffy.BackupPower.Settings.UpdateInterval>Intervalle de mise à jour (actuel: {0}, par défaut: {1})</Fluffy.BackupPower.Settings.UpdateInterval>
+    <Fluffy.BackupPower.Settings.UpdateInterval.Tooltip>Intervalle avec lequel les besoins en alimentation de secours sont recalculés. Des intervalles plus courts signifient moins de gaspillage en ressources, mais peuvent entraîner un certain lag.</Fluffy.BackupPower.Settings.UpdateInterval.Tooltip>
+    <Fluffy.BackupPower.Settings.MinimumOnTime>Temps d'activation minimum (actuel: {0}, par défaut: {1})</Fluffy.BackupPower.Settings.MinimumOnTime>
+    <Fluffy.BackupPower.Settings.MinimumOnTime.Tooltip>Les générateurs de temps minimum resteront actifs lorsqu'ils seront activés. Des durées plus courtes sont plus efficaces, mais peuvent entraîner un "clignotement" ou un arrêt des générateurs.</Fluffy.BackupPower.Settings.MinimumOnTime.Tooltip>
+
+    <!-- destroyed because parent destroyed message -->
+    <Fluffy.BackupPower.AttachmentDestroyedBecauseParentGone>Le boîtier de commande d'alimentation de secours a été détruit car le/la {0} auquel il était attaché a été détruit.</Fluffy.BackupPower.AttachmentDestroyedBecauseParentGone>
+    <!-- default if we don't have a more specific label above -->
+    <Fluffy.BackupPower.Generator>générateur</Fluffy.BackupPower.Generator>
+
+    <!-- battery level command -->
+    <Fluffy.BackupPower.Status.Standby>En attente</Fluffy.BackupPower.Status.Standby>
+    <Fluffy.BackupPower.Status.Running>En marche</Fluffy.BackupPower.Status.Running>
+    <Fluffy.BackupPower.Status.Error>Erreur</Fluffy.BackupPower.Status.Error>
+    <Fluffy.BackupPower.CurrentStatus>État actuel: {0}</Fluffy.BackupPower.CurrentStatus>
+    <Fluffy.BackupPower.CurrentStorage>Puissance stockée: {0}</Fluffy.BackupPower.CurrentStorage>
+    <Fluffy.BackupPower.TurnsOnBelow>S'allume ci-dessous: {0}</Fluffy.BackupPower.TurnsOnBelow>
+    <Fluffy.BackupPower.TurnsOffAbove>Désactive ci-dessus: {0}</Fluffy.BackupPower.TurnsOffAbove>
+    <Fluffy.BackupPower.CommandLabel>Contrôle de puissance</Fluffy.BackupPower.CommandLabel>
+
+    <Fluffy.BackupPower.CopyTo>Copier les paramètres dans:</Fluffy.BackupPower.CopyTo>
+    <Fluffy.BackupPower.CopyTo.Room>Pièce</Fluffy.BackupPower.CopyTo.Room>
+    <Fluffy.BackupPower.CopyTo.Connected>Connecté</Fluffy.BackupPower.CopyTo.Connected>
+    <Fluffy.BackupPower.CopyTo.All>Tout</Fluffy.BackupPower.CopyTo.All>
+</LanguageData>
